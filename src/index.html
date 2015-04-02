@@ -14,7 +14,7 @@
 				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 				<link rel="stylesheet" href="css/base.css">
 		</head>
-		<body>
+		<body id="vimeo_sample">
 				<!--[if lt IE 7]>
 						<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 				<![endif]-->
@@ -25,45 +25,42 @@
 
 
 
-
-
-
 				<header>
-					<h1>Vimeo • Sample</h1> 
+					<h1>Vimeo • Sample</h1> <label for="channel_select">Select Channel:</label><select id="channel_select"></select>
 				</header>
 
-
-				<section id="channel_browser">
 					
-					<section id="channel_info">
-						<div id="channel_image"></div>
-						<h2 id="channel_title"></input></h2>
+					<section class="channel-browser" id="channel_browser">
+					
+						<section class="channel-container channel-info" id="channel_info">
+							<div class="channel-logo" id="channel_image"></div>
+							<h2 class="channel-title" id="channel_title"></h2>
 
-						<div id="channel_links"></div>
-						<div id="channel_stats"></div>
-					</section>
+							<div class="channel-links" id="channel_links"></div>
+							<div class="channel-stats" id="channel_stats"></div>
+						</section>
 
-					<section id="channel_list">
+						<section class="channel-container channel-list" id="channel_list">
 
-						<h2>Videos</h2>
+							<h2 class="channel-list-title">Videos</h2>
 
-						<div id="layout_toggle">
+							<div class="channel-list-layout" id="layout_toggle">
 
-							<input id="layout_list" name="layout" type="radio">
-							<label for="layout_list">List</label>
+								<input id="layout_list" name="layout" type="radio">
+								<label for="layout_list">List</label>
 
-							<input id="layout_grid" name="layout" type="radio">
-							<label for="layout_grid">Grid</label>
+								<input id="layout_grid" name="layout" type="radio">
+								<label for="layout_grid">Grid</label>
 
-						</div>
+							</div>
 
-						<ul id="video_list">
-							
-						</ul>
+							<ul class="channel-video-list" id="video_list">
+								
+							</ul>
 
-						<button id="video_pager"></button>
+							<button id="video_pager">Load more videos</button>
 
-					</section>
+						</section>
 
 				</section>
 
@@ -74,7 +71,21 @@
 
 
 
-
+				<script type="text/template" id="video_template">
+					<div class="video-wrapper">
+						<div class="video-thumbnail">
+							<a href="<%- url %>">
+								<img src="<%- thumbnail_medium %>" alt="" class="video-image"/>
+								<span class="video-duration"><%- duration %></span>
+							</a>
+						</div>
+						<div class="video-content">
+							<span class="video-title"><%- title %></span>•
+							<span class="video-author"><%- user_name %></span>•
+							<span class="video-created"><%- time_ago %></span>
+						</div>
+					</div>
+				</script>
 
 
 
@@ -82,6 +93,7 @@
 				<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 				<script src="http://underscorejs.org/underscore-min.js"></script>
 				<script src="http://backbonejs.org/backbone-min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 
 				<script src="js/models.js"></script>
 				<script src="js/collections.js"></script>

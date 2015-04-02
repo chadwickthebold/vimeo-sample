@@ -1,4 +1,104 @@
+.clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+
 body {
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 14px
+	font-size: 14px;
+}
+
+header {
+	padding: 1em;
+
+	h1 {
+		display: inline-block;
+		margin: 0;
+	}
+}
+
+.channel-browser {
+
+	.channel-container {
+		width: 85%; 
+		margin: 1em auto 0 auto;
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+
+	.channel-info {
+
+		.channel-logo {
+
+		img {
+			display: block;
+			max-width: 100%;
+			margin: 0 auto;
+		}
+
+		}
+
+		.channel-title {
+			margin: 0;
+			padding: 1em 0.5em;
+		}
+
+	}
+
+	.channel-list {
+		padding: 0 0.5em;
+
+		.channel-list-title {
+			margin: 1em 0;
+		}
+
+		.channel-layout-controls {
+
+		}
+
+		.channel-video-list {
+			list-style: none;
+			padding: 0;
+
+
+			&.grid-layout {
+				@extend .clearfix;
+
+				.video-card {
+					float: left;
+				}
+			}
+
+			&.list-layout {
+
+				.video-card {
+					margin: 0.5em 0;
+				}
+			}
+		}
+
+
+	}
+
+}
+
+.video-card {
+	border: 1px solid #CCCCCC;
+	padding: 0.5em;
+	margin: 0.5em;
+}
+
+footer {
+	padding: 1em;
+	font-size: 85%;
+
+	p {
+		margin: 0;
+	}
 }

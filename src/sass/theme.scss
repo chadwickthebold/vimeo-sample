@@ -1,4 +1,39 @@
-.container {
-	background-color: indianred;
-	border: 1px solid #CCC;
+body {
+	background-color: #F1F1F1;
+}
+
+header {
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+footer {
+	background-color: #FFFFFF;
+	border-top: 1px solid #CCCCCC;
+}
+
+.channel-browser {
+
+	.channel-container {
+		background-color: #FFFFFF;
+		border: 1px solid #CCCCCC;
+
+		&:first-child {
+			border-top-width: 0;
+		}
+
+		&:last-child {
+			border-bottom-width: 0;
+		}
+
+	}
+
+	.channel-info {
+
+		.channel-logo {
+			background-color: #000000;
+		}
+
+	}
+
 }

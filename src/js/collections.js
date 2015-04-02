@@ -4,7 +4,7 @@ $(function() {
 	'use strict';
 
 	// Collection of Videos in the channel
-	app.VideoList = Backbone.Collection.extend({
+	app.Videos = Backbone.Collection.extend({
 		model : app.Video
 	});
 

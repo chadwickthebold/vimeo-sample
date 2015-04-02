@@ -13,15 +13,6 @@ $(function() {
 		'1341'
 	];
 
-	function getChannelURL(channel, type) {
-		if (type === "info") {
-			return "http://vimeo.com/api/v2/channel/" + channel + "/info.json";
-		} else {
-			return "http://vimeo.com/api/v2/channel/" + channel + "/videos.json";
-		}
-		
-	}
-
 	new app.AppView();
 
 });
