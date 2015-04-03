@@ -94,11 +94,14 @@ $(function() {
 	app.ChannelView = Backbone.View.extend({
 
 
-		el: '#channel_browser',
-
-
 		events: {
-			'click #video_pager' : 'loadNextPage'
+			'click .video-pager' : 'loadNextPage',
+			'click .show-details' : 'showInfoSection'
+		},
+
+		showInfoSection: function() {
+			this.$detailsToggle.toggleClass('details-shown details-hidden');
+			this.$detailsSection.toggleClass('is-hidden');
 		},
 
 
@@ -118,10 +121,10 @@ $(function() {
 				view.$videoPager.removeAttr('disabled');
 
 				// Disable the button if we've hit the page limit
-				if (view.model.pagesLoaded >= 3) {
+				if (view.model.get('pagesLoaded') >= 3) {
 					view.$videoPager.addClass('is-disabled');
 					view.$videoPager.attr('disabled', 'true');
-					view.$el.off('click', '#video_pager');
+					view.$el.off('click', '.video-pager');
 				}
 			});
 			
@@ -129,21 +132,37 @@ $(function() {
 
 
 		render: function() {
+
 			this.$image.empty();
 			this.$title.empty();
 
 			this.$image.append($('<img src="' + this.model.attributes.logo + '"/>'));
 			this.$title.append(this.model.attributes.name);
+
+			this.$rssLink.attr('href', this.model.get('rss'));
+			this.$description.text(this.model.get('description'));
+			this.$createdDate.text(moment(this.model.get('created_on')).format("MMM Do YY"));
+			this.$creator.attr('href', this.model.get('creator_url'));
+			this.$creator.text(this.model.get('creator_display_name'));
+			this.$vids.text(this.model.get('total_videos'));
+			this.$subs.text(this.model.get('total_subscribers'));
 		},
 
 
 		initialize: function() {
-			this.infoContainer = this.$('#channel_info');
-			this.$image = this.$('#channel_image');
-			this.$title = this.$('#channel_title');
-			this.$links = this.$('#channel_links');
-			this.$stats = this.$('#channel_stats');
-			this.$videoPager = this.$('#video_pager');
+			this.infoContainer = this.$('.channel_info');
+			this.$image_area = this.$('.channel-image');
+			this.$image = this.$('.logo-container');
+			this.$title = this.$('.channel-title');
+			this.$vids = this.$('.channel-vids');
+			this.$subs = this.$('.channel-subscribers');
+			this.$detailsToggle = this.$('.show-details');
+			this.$videoPager = this.$('.video-pager');
+			this.$detailsSection = this.$('.channel-details');
+			this.$rssLink = this.$('.channel-rss');
+			this.$description = this.$('.channel-description');
+			this.$createdDate = this.$('.channel-createdDate');
+			this.$creator = this.$('.channel-creator');
 
 			this.loadNextPage();
 			this.render();
@@ -170,18 +189,22 @@ $(function() {
 
 
 		events: {
-			'change #channel_select': 'viewChannel'
-		},
+			'change #vimeo_channel_select': 'viewChannel'
+		}, 
 
 
 		viewChannel: function() {
+
+			if (app.OpenChannel && app.OpenChannelView) {
+				app.OpenChannelView.undelegateEvents(); 
+			}
 
 			app.OpenChannel = new app.Channel({
 				'channel_identifier': this.$channelSelect.val()
 			});
 
 			app.OpenChannel.fetch().then(function() {
-				app.OpenChannelView = new app.ChannelView({ model: app.OpenChannel });
+				app.OpenChannelView = new app.ChannelView({ el : '#vimeo_channel_browser',model: app.OpenChannel });
 			});
 
 		},
@@ -203,7 +226,7 @@ $(function() {
 		},
 
 		initialize: function() {
-			this.$channelSelect = this.$('#channel_select');
+			this.$channelSelect = this.$('#vimeo_channel_select');
 
 			this.render();
 

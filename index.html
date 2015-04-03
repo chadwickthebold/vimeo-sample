@@ -26,39 +26,72 @@
 
 
 				<header>
-					<h1>Vimeo • Sample</h1> <label for="channel_select">Select Channel:</label><select id="channel_select"></select>
+					<h1>Vimeo • Sample</h1> 
+					<div class="channel-select-container">
+						<label for="channel_select">Select Channel:</label>
+						<select id="vimeo_channel_select"></select>
+					</div>
 				</header>
 
 					
-					<section class="channel-browser" id="channel_browser">
+					<section class="channel-browser" id="vimeo_channel_browser">
 					
-						<section class="channel-container channel-info" id="channel_info">
-							<div class="channel-logo" id="channel_image"></div>
-							<h2 class="channel-title" id="channel_title"></h2>
+						<section class="channel-container channel-info" >
+							<div class="channel-logo channel-image">
+								<div class="logo-container"></div>
+								<a href="#" class="channel-rss"><i class="rss-sm fa fa-rss"></i><i class="rss-lg fa fa-2x fa-rss"></i></a>
+							</div>
+							<h2 class="channel-title"></h2>
 
-							<div class="channel-links" id="channel_links"></div>
-							<div class="channel-stats" id="channel_stats"></div>
+							<div class="channel-toolbar">
+								<button class="show-details details-hidden"><span class="show-message">Show Details</span><span class="hide-message">Hide Details</span></button>
+							</div>
+
+							<section class="channel-details is-hidden">
+								<hr>
+								<div class="channel-stats">
+									<span title="Videos" class="channel-vids-wrapper">
+										<i class="fa fa-video-camera"></i> <span class="channel-vids"></span>
+									</span>
+									<span title="Subscribers"class="channel-subs-wrapper">
+										<i class="fa fa-newspaper-o"></i> <span class="channel-subscribers"></span>
+									</span>
+								</div>
+								<p class="channel-description"></p>
+								<p>Created on <span class="channel-createdDate"></span> by <a href="#" class="channel-creator"></a></p>
+							</section>
+
+
 						</section>
 
 						<section class="channel-container channel-list" id="channel_list">
+							
+							<div class="channel-list-header">
+								
+								<h2 class="channel-list-title">Videos</h2>
 
-							<h2 class="channel-list-title">Videos</h2>
 
-							<div class="channel-list-layout" id="layout_toggle">
+								<div class="channel-list-layout " id="layout_toggle">
 
-								<input id="layout_list" name="layout" type="radio">
-								<label for="layout_list">List</label>
+									<label for="channel-layout-toggle" >Layout: </label>
+									<div id="channel-layout-toggle" class="channel-layout-toggle">
+										<input id="layout_list" name="layout" type="radio">
+										<label for="layout_list">List</label>
 
-								<input id="layout_grid" name="layout" type="radio">
-								<label for="layout_grid">Grid</label>
+										<input id="layout_grid" name="layout" type="radio">
+										<label for="layout_grid">Grid</label>
+									</div>
+
+								</div>
 
 							</div>
+							
 
 							<ul class="channel-video-list" id="video_list">
 								
 							</ul>
 
-							<button id="video_pager">Load more videos</button>
+							<button class="video-pager"><span class="load-message">Load More Videos</span><span class="limit-message">API Limit Reached</span></button>
 
 						</section>
 
@@ -76,13 +109,27 @@
 						<div class="video-thumbnail">
 							<a href="<%- url %>">
 								<img src="<%- thumbnail_medium %>" alt="" class="video-image"/>
-								<span class="video-duration"><%- duration %></span>
+								<span class="video-duration"><%- duration_string %></span>
 							</a>
 						</div>
-						<div class="video-content">
-							<span class="video-title"><%- title %></span>•
-							<span class="video-author"><%- user_name %></span>•
+						<p class="video-content">
+							<span class="video-title"><%- title %></span> •
+							<a href="<%- user_url %>" class="video-author"><%- user_name %></a> •
 							<span class="video-created"><%- time_ago %></span>
+						</p>
+						<div class="video-details">
+							<p class="video-description"><%- description %></p>
+							<div class="video-stats">
+								<% if (typeof(stats_number_of_likes) !== "undefined") { %>
+									<span title="Likes" class="likes-container"><i class="fa fa-heart"></i> <%- stats_number_of_likes %></span>
+								<% } %>
+								<% if (typeof(stats_number_of_plays) !== "undefined") { %>
+									<span title="Plays" class="views-container"><i class="fa fa-eye"></i> <%- stats_number_of_plays %></span>
+								<% } %>
+								<% if (typeof(stats_number_of_comments) !== "undefined") { %>
+									<span title="Comments" class="comments-container"><i class="fa fa-comments"></i> <%- stats_number_of_comments %></span>
+								<% } %>
+							</div>
 						</div>
 					</div>
 				</script>
@@ -93,6 +140,7 @@
 				<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 				<script src="http://underscorejs.org/underscore-min.js"></script>
 				<script src="http://backbonejs.org/backbone-min.js"></script>
+
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 
 				<script src="js/models.js"></script>
