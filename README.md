@@ -2,6 +2,8 @@
 
 Sample application built with the [Vimeo Simple API](https://developer.vimeo.com/apis/simple)
 
+It can be viewed at [tylerchadwick.com/vimeo-sample](http://tylerchadwick.com/vimeo-sample)
+
 ## Instructions
 
 Various tasks are available from the included gulpfile. Install project dependencies with `npm install`. 
