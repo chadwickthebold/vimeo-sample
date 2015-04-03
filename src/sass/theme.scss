@@ -1,22 +1,39 @@
+$text-color: #333333;
+
+$btn-color: #E3E3E3;
+$btn-hover-color: darken($btn-color, 10%);
+
+$border-color: #CCCCCC;
+
 body {
 	background-color: #F1F1F1;
+	color: $text-color;
 }
 
 header {
 	background-color: #FFFFFF;
-	border-bottom: 1px solid #CCCCCC;
+	border-bottom: 1px solid $border-color;
 }
 
 footer {
 	background-color: #FFFFFF;
-	border-top: 1px solid #CCCCCC;
+	border-top: 1px solid $border-color;
+}
+
+button {
+	background-color: $btn-color;
+	border: 1px solid $border-color;
+
+	&:focus, &:hover {
+		background-color: $btn-hover-color;
+	}
 }
 
 .channel-browser {
 
 	.channel-container {
 		background-color: #FFFFFF;
-		border: 1px solid #CCCCCC;
+		border: 1px solid $border-color;
 
 		&:first-child {
 			border-top-width: 0;
@@ -31,9 +48,32 @@ footer {
 	.channel-info {
 
 		.channel-logo {
-			background-color: #000000;
+			background-color: #222222;
 		}
 
 	}
 
+}
+
+.channel-rss {
+	background-color: rgba(255,255,255,0.65);
+}
+
+.channel-stats {
+	.channel-vids-wrapper {
+		background-color: tan;
+	}
+
+	.channel-subs-wrapper {
+		background-color: cadetblue;
+	}
+}
+
+.video-card {
+	border: 1px solid $border-color;
+
+	.video-duration {
+		background-color: rgba(255, 255, 255, 0.65);
+		color: $text-color;
+	}
 }

@@ -7,7 +7,9 @@ var gulp = require('gulp'),
 		rename = require('gulp-rename'),
 		sourcemaps = require('gulp-sourcemaps'),
 		del = require('del'),
-		runSequence = require('run-sequence');
+		runSequence = require('run-sequence'),
+		ghpages = require('gulp-gh-pages'),
+		debug = require('gulp-debug');
 
 
 var paths = {
@@ -22,7 +24,8 @@ var paths = {
 		root : 'dist',
 		scripts : 'dist/js',
 		styles : 'dist/css'
-	}
+	},
+	deploy : './dist/**/*'
 }
 
 
@@ -78,6 +81,13 @@ gulp.task('watch', function() {
 	gulp.watch(paths.src.scripts, ['build:scripts']);
 	gulp.watch(paths.src.styles, ['build:sass']);
 	gulp.watch(paths.src.html, ['build:static']);
+});
+
+
+gulp.task('deploy', function() {
+	return gulp.src(paths.deploy)
+		.pipe(debug())
+		.pipe(ghpages());
 });
 
 
