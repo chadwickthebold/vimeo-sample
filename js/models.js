@@ -13,20 +13,19 @@ $(function() {
 					duration_minutes,
 					duration_string;
 
+			// Parse the video duration into minutes and seconds
 			duration_leftover = duration_seconds % 60;
-
 			duration_seconds -= duration_leftover;
-
 			duration_minutes = duration_seconds / 60;
-
 			duration_leftover = duration_leftover + "";
+
+			// Zero-start the seconds value if necessary
 			if (duration_leftover.length < 2) {
 				duration_leftover = "0" + duration_leftover;
 			}
 
+			// Create the duration string for use in teh view
 			duration_string = duration_minutes + ':' + duration_leftover;
-
-
 			this.set('duration_string', duration_string);
  
 			this.set('time_ago', time_ago);
@@ -53,6 +52,7 @@ $(function() {
 			var channel = this,
 					next_page = channel.get('pagesLoaded') + 1;
 
+			// Request a new page of results, adding them to the existing collection and incrementing the page count
 			return $.get("http://vimeo.com/api/v2/channel/" + this.get('channel_identifier') + "/videos.json?page=" + next_page, function(videoArray) {
 				channel.Videos.add(videoArray);
 				channel.set('pagesLoaded', next_page);

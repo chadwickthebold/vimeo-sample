@@ -37,6 +37,7 @@ $(function() {
 			'click #layout_grid' : 'setGridLayout'
 		},
 
+		// Attempt to change layout to a list
 		setListLayout: function() {
 
 			if (!this.$video_list.is('.list-layout')) {
@@ -45,6 +46,7 @@ $(function() {
 			
 		},
 
+		// Attempt to change layout to a grid
 		setGridLayout: function() {
 
 			if (!this.$video_list.is('.grid-layout')) {
@@ -53,6 +55,7 @@ $(function() {
 
 		},
 
+		// Add an additional video to the view
 		addOne: function(video) {
 			var view = new app.VideoView({ model: video });
 			this.$video_list.append(view.render().el);
@@ -61,8 +64,10 @@ $(function() {
 		render: function() {
 			var videoList = this;
 
+			// Remove any leftover video elements
 			videoList.$video_list.empty();
 
+			// Iterate through the collection and add each video to the list
 			videoList.collection.models.forEach(function(video) {
 				videoList.addOne(video);
 			});
@@ -73,11 +78,16 @@ $(function() {
 			this.$listRadio = this.$('#layout_list');
 			this.$gridRadio = this.$('#layout_grid');
 
-			this.$gridRadio.attr('checked', 'true');
-			this.setGridLayout();
+			// Set the layout based on the initially checked control
+			if (this.$('#layout_list').is(':checked')) {
+				this.setListLayout();
+			} else {
+				this.setGridLayout();
+			}
 
 			this.render();
 
+			// Bind the addOne function to the collection add event
 			this.collection.on('add', this.addOne, this);
 		}
 
@@ -98,7 +108,8 @@ $(function() {
 			'click .video-pager' : 'loadNextPage',
 			'click .show-details' : 'showInfoSection'
 		},
-
+		
+		// Toggle the visibility of the channel details section
 		showInfoSection: function() {
 			this.$detailsToggle.toggleClass('details-shown details-hidden');
 			this.$detailsSection.toggleClass('is-hidden');
@@ -133,12 +144,15 @@ $(function() {
 
 		render: function() {
 
+			// Remove any leftover content
 			this.$image.empty();
 			this.$title.empty();
 
+			// Create a new img element for the logo and insert it
 			this.$image.append($('<img src="' + this.model.attributes.logo + '"/>'));
 			this.$title.append(this.model.attributes.name);
 
+			// Set the display values for the model attributes
 			this.$rssLink.attr('href', this.model.get('rss'));
 			this.$description.text(this.model.get('description'));
 			this.$createdDate.text(moment(this.model.get('created_on')).format("MMM Do YY"));
@@ -164,10 +178,11 @@ $(function() {
 			this.$createdDate = this.$('.channel-createdDate');
 			this.$creator = this.$('.channel-creator');
 
+			// Load a single page of results immediately prior to rendering
 			this.loadNextPage();
 			this.render();
 
-
+			// Instantiate the ViewList collection view
 			this.VideoListView = new app.VideoListView({ collection: this.model.Videos});
 
 		}
@@ -192,17 +207,20 @@ $(function() {
 			'change #vimeo_channel_select': 'viewChannel'
 		}, 
 
-
+		// Open a new channnel based on the value of the select element
 		viewChannel: function() {
 
+			// Unbind old events, if any
 			if (app.OpenChannel && app.OpenChannelView) {
 				app.OpenChannelView.undelegateEvents(); 
 			}
-
+			
+			// Create a new channel with teh specified channel identifier
 			app.OpenChannel = new app.Channel({
 				'channel_identifier': this.$channelSelect.val()
 			});
 
+			// Fetch the channel representation, then instantiate a new ChannelView
 			app.OpenChannel.fetch().then(function() {
 				app.OpenChannelView = new app.ChannelView({ el : '#vimeo_channel_browser',model: app.OpenChannel });
 			});
@@ -213,6 +231,7 @@ $(function() {
 		render: function() {
 			var appView = this;
 
+			// Iterate through the sample list of channels and add new option elements for selection
 			app.ChannelList.forEach(function(identifier) {
 				var newOption = $('<option>');
 
@@ -220,7 +239,7 @@ $(function() {
 				appView.$channelSelect.append(newOption);
 			});
 
-
+			// Trigger creation of a new channel based on the initial select value
 			appView.viewChannel();
 
 		},
